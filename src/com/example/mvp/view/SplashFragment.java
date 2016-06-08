@@ -3,34 +3,32 @@ package com.example.mvp.view;
 import com.example.mvp.presenter.SplashPresenter;
 import com.example.mytools.R;
 
-import android.app.Activity;
+import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Toast;
 
-public class SplashActivity extends Activity implements ISplashView {
+public class SplashFragment extends Fragment implements ISplashView {
 
 	SplashPresenter presenter;
 	private ProgressDialog progressBar;
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_user);
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
+		View view = inflater.inflate(R.layout.activity_user, container, false);
 
 		presenter = new SplashPresenter(this);
-	}
-
-	@Override
-	protected void onResume() {
-		super.onResume();
-		presenter.didFinishLoading(this);
+		return view;
 	}
 
 	@Override
 	public void showProcessBar() {
 		if (progressBar == null) {
-			progressBar = new ProgressDialog(this);
+			progressBar = new ProgressDialog(this.getActivity());
 			progressBar.setCancelable(true);
 			progressBar.setCanceledOnTouchOutside(true);
 			progressBar.setMessage("更新数据中，请稍后");
@@ -45,12 +43,11 @@ public class SplashActivity extends Activity implements ISplashView {
 
 	@Override
 	public void showNetError() {
-		Toast.makeText(this, "暂无网络", Toast.LENGTH_SHORT).show();
+		Toast.makeText(this.getActivity(), "暂无网络", Toast.LENGTH_SHORT).show();
 	}
 
 	@Override
 	public void startNextActivity() {
-		Toast.makeText(this, "跳到下个activity", Toast.LENGTH_SHORT).show();
+		Toast.makeText(this.getActivity(), "跳到下个activity", Toast.LENGTH_SHORT).show();
 	}
-
 }

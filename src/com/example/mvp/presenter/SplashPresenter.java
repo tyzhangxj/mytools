@@ -17,6 +17,7 @@ public class SplashPresenter {
 
 	public void didFinishLoading(Context context) {
 		iView.showProcessBar();
+		
 		if (connect.isNetConnect(context)) {
 			iView.startNextActivity();
 		} else {

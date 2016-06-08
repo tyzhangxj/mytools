@@ -1,25 +1,24 @@
 package com.example.mytools;
+ 
 
-import com.example.mvp.view.R;
+import com.example.mvp.view.SplashFragment;
+import com.example.mvp.view.UserFragment;
 
 import android.app.Activity;
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.content.Context;
-import android.os.Build;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.support.v4.widget.DrawerLayout;
-import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.support.v4.widget.DrawerLayout;
 
 public class MainActivity extends ActionBarActivity implements
 		NavigationDrawerFragment.NavigationDrawerCallbacks {
@@ -52,12 +51,42 @@ public class MainActivity extends ActionBarActivity implements
 
 	@Override
 	public void onNavigationDrawerItemSelected(int position) {
-		// update the main content by replacing fragments
-		FragmentManager fragmentManager = getSupportFragmentManager(); 
-		fragmentManager
-				.beginTransaction()
-				.replace(R.id.container,
-						PlaceholderFragment.newInstance(position + 1)).commit();
+		Toast.makeText(this, ""+position, Toast.LENGTH_SHORT).show();
+		switch(position+1){
+		case 1:
+			FragmentManager fragmentManager = getFragmentManager(); 
+			fragmentManager
+			.beginTransaction()
+			.replace(R.id.container,
+					PlaceholderFragment.newInstance(position + 1)).commit();
+			break;
+		case 2:			 
+			FragmentManager fragmentManager1 = getFragmentManager(); 
+			fragmentManager1
+			.beginTransaction()
+			.replace(R.id.container,
+					new SplashFragment()).commit(); 
+			break;
+		case 3:		
+			FragmentManager fragmentManager2 = getFragmentManager(); 
+			fragmentManager2
+			.beginTransaction()
+			.replace(R.id.container,
+					new UserFragment()).commit(); 
+			break;
+		case 4:
+			break;
+		case 5:
+			break;
+		case 6:
+			break;
+		}
+		
+//		FragmentManager fragmentManager = getSupportFragmentManager(); 
+//		fragmentManager
+//				.beginTransaction()
+//				.replace(R.id.container,
+//						PlaceholderFragment.newInstance(position + 1)).commit();
 	}
 
 	public void onSectionAttached(int number) {
@@ -144,6 +173,8 @@ public class MainActivity extends ActionBarActivity implements
 				Bundle savedInstanceState) {
 			View rootView = inflater.inflate(R.layout.fragment_main, container,
 					false);
+			TextView tv = (TextView) rootView.findViewById(R.id. section_label);
+	        tv.setText(getArguments().getInt( ARG_SECTION_NUMBER)+"");
 			return rootView;
 		}
 

@@ -1,34 +1,35 @@
 package com.example.mvp.view;
 
-import android.app.Activity;
-import android.os.Bundle;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.EditText;
-
 import com.example.mvp.presenter.UserPresenter;
 import com.example.mytools.R;
 
-public class UserActivity extends Activity implements OnClickListener,
-		IUserView {
+import android.app.Fragment;
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.widget.EditText;
+
+public class UserFragment extends Fragment implements OnClickListener,IUserView {
 
 	UserPresenter presenter;
 	EditText id, first, last;
-
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_user);
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
+		View view = inflater.inflate(R.layout.activity_user, container, false);
 
-		findViewById(R.id.save).setOnClickListener(this);
-		findViewById(R.id.load).setOnClickListener(this);
-		id = (EditText) findViewById(R.id.id);
-		first = (EditText) findViewById(R.id.first);
-		last = (EditText) findViewById(R.id.last);
-
-		presenter = new UserPresenter(this, this);
+		view.findViewById(R.id.save).setOnClickListener(this);
+		view.findViewById(R.id.load).setOnClickListener(this);
+		id = (EditText) view.findViewById(R.id.id);
+		first = (EditText) view.findViewById(R.id.first);
+		last = (EditText) view.findViewById(R.id.last);
+		
+		presenter = new UserPresenter(this,this.getActivity());
+		return view;
 	}
-
+	
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
